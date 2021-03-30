@@ -10,6 +10,9 @@ const COLORS = [
 
 const colors = shuffle(COLORS);
 
+let cards = [];
+let flippedCards = [];
+
 createCards(colors);
 
 
@@ -40,13 +43,13 @@ function shuffle(items) {
 
 function createCards(colors) {
   const gameBoard = document.getElementById("game");
-
   for (let color of colors) {
     // missing code here ...
-    let box = document.createElement("div");
-    box.setAttribute("class", color);
-    gameBoard.appendChild(box);
-    gameBoard.addEventListener("click", function(event){
+    let card = document.createElement("div");
+    card.setAttribute("class", color);
+    cards.push(card);
+    gameBoard.appendChild(card);
+    card.addEventListener("click", function(event){
       handleCardClick(event.target);
     })
   }
@@ -71,8 +74,29 @@ function unFlipCard(card) {
 
 function handleCardClick(evt) {
   // ... you need to write this ...
-  flipCard(evt);
-  setTimeout(function(){
-    unFlipCard(evt);
-  }, 2000);
-}
+  if(flippedCards.length < 2){
+    flipCard(evt);
+    flippedCards.push(evt);
+    if(flippedCards[0] == flippedCards[1]){
+      flippedCards = [];
+      console.log("meow");
+    } 
+  }
+  if(flippedCards.length === 2){
+    setTimeout(function(){
+      for(let i = 0; i < flippedCards.length; i++){
+        unFlipCard(flippedCards[i]);
+      }
+      flippedCards = [];
+    }, 2000);
+  }
+
+  }
+
+
+  // flippedCards.push(evt.className);
+  // if(flippedCards.length === 2 && flippedCards[0] === flippedCards[1]){
+    
+  // } else {
+  //   unFlipCard(evt);
+  // }
