@@ -12,6 +12,9 @@ const colors = shuffle(COLORS);
 
 let cards = [];
 let flippedCards = [];
+let cardClick = function(event){
+  handleCardClick(event.target)
+}
 
 createCards(colors);
 
@@ -49,11 +52,10 @@ function createCards(colors) {
     card.setAttribute("class", color);
     cards.push(card);
     gameBoard.appendChild(card);
-    card.addEventListener("click", function(event){
-      handleCardClick(event.target);
-    })
+    card.addEventListener("click", cardClick)
   }
 }
+
 
 /** Flip a card face-up. */
 
@@ -76,19 +78,22 @@ function handleCardClick(evt) {
   // ... you need to write this ...
   if(flippedCards.length < 2){
     flipCard(evt);
+    evt.removeEventListener("click", cardClick)
     flippedCards.push(evt);
   }
   if(flippedCards.length === 2){
     if(flippedCards[0].style.backgroundColor === flippedCards[1].style.backgroundColor){
       flippedCards = [];
     } else {
-    setTimeout(function(){
-      for(let i = 0; i < flippedCards.length; i++){
-        unFlipCard(flippedCards[i]);
-      }
-      flippedCards = [];
-    }, 2000);
+      setTimeout(function(){
+        for(let i = 0; i < flippedCards.length; i++){
+          unFlipCard(flippedCards[i]);
+        }
+        flippedCards[0].addEventListener("click", cardClick)
+        flippedCards[1].addEventListener("click", cardClick)
+        flippedCards = [];
+      }, 2000);
+    }
   }
-  }
-
-  }
+  console.log(flippedCards)
+}
