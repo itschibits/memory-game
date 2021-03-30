@@ -15,6 +15,7 @@ let flippedCards = [];
 let cardClick = function(event){
   handleCardClick(event.target)
 }
+let clickNum = 0;
 
 createCards(colors);
 
@@ -81,9 +82,11 @@ function handleCardClick(evt) {
     evt.removeEventListener("click", cardClick)
     flippedCards.push(evt);
   }
-  if(flippedCards.length === 2){
+  clickNum++
+  if(flippedCards.length === 2 && clickNum === 2){
     if(flippedCards[0].style.backgroundColor === flippedCards[1].style.backgroundColor){
       flippedCards = [];
+      clickNum = 0;
     } else {
       setTimeout(function(){
         for(let i = 0; i < flippedCards.length; i++){
@@ -92,8 +95,8 @@ function handleCardClick(evt) {
         flippedCards[0].addEventListener("click", cardClick)
         flippedCards[1].addEventListener("click", cardClick)
         flippedCards = [];
+        clickNum = 0;
       }, 2000);
     }
   }
-  console.log(flippedCards)
 }
