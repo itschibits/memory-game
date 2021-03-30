@@ -77,12 +77,11 @@ function handleCardClick(evt) {
   if(flippedCards.length < 2){
     flipCard(evt);
     flippedCards.push(evt);
-    if(flippedCards[0] == flippedCards[1]){
-      flippedCards = [];
-      console.log("meow");
-    } 
   }
   if(flippedCards.length === 2){
+    if(flippedCards[0].style.backgroundColor === flippedCards[1].style.backgroundColor){
+      flippedCards = [];
+    } else {
     setTimeout(function(){
       for(let i = 0; i < flippedCards.length; i++){
         unFlipCard(flippedCards[i]);
@@ -90,13 +89,6 @@ function handleCardClick(evt) {
       flippedCards = [];
     }, 2000);
   }
-
   }
 
-
-  // flippedCards.push(evt.className);
-  // if(flippedCards.length === 2 && flippedCards[0] === flippedCards[1]){
-    
-  // } else {
-  //   unFlipCard(evt);
-  // }
+  }
