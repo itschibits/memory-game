@@ -110,7 +110,10 @@ function handleCardClick(evt) {
     let restart = document.createElement("BUTTON");
     restart.innerHTML = "Restart!";
     document.getElementById("game").appendChild(restart);
-    restart.addEventListener("click", restartGame);
+    restart.addEventListener("click", () => {
+      shuffle(COLORS);
+      restartGame();
+    });
     totalMatches = 0;
   }
 }
