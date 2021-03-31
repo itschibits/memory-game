@@ -16,6 +16,7 @@ let cardClick = function(event){
   handleCardClick(event.target)
 }
 let clickNum = 0;
+let totalMatches = 0;
 
 createCards(colors);
 
@@ -73,6 +74,11 @@ function unFlipCard(card) {
   card.setAttribute("style", "background-color: none");
 }
 
+function restartGame(){
+  document.getElementById("game").innerHTML = "";
+  createCards(colors);
+}
+
 /** Handle clicking on a card: this could be first-card or second-card. */
 
 function handleCardClick(evt) {
@@ -86,6 +92,7 @@ function handleCardClick(evt) {
   if(flippedCards.length === 2 && clickNum === 2){
     if(flippedCards[0].style.backgroundColor === flippedCards[1].style.backgroundColor){
       flippedCards = [];
+      totalMatches++;
       clickNum = 0;
     } else {
       setTimeout(function(){
@@ -98,5 +105,12 @@ function handleCardClick(evt) {
         clickNum = 0;
       }, 2000);
     }
+  }
+  if(totalMatches === 5){
+    let restart = document.createElement("BUTTON");
+    restart.innerHTML = "Restart!";
+    document.getElementById("game").appendChild(restart);
+    restart.addEventListener("click", restartGame);
+    totalMatches = 0;
   }
 }
